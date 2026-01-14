@@ -3,23 +3,1347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TESLA — The Nexus | Institutional Trading Platform</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>TESLA NEXUS | Official Platform</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <style>
-        :root {
-            /* Production Dark Theme */
-            --primary-dark: #000000;
-            --secondary-dark: #0a0a0a;
-            --accent-dark: #00d6ff;
-            --accent-dark-secondary: #cc00ff;
-            --success-color: #00ff88;
-            --warning-color: #ffaa00;
-            --error-color: #ff5555;
-            --text-dark: #ffffff;
-            --text-dark-secondary: #b0b0b0;
-            --card-dark: #111111;
-            --card-dark-border: #222222;
-            --neon-glow: 0 0 10px rgba(0, 214, 255, 0.7), 0
+        /* BASE RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        body {
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* GLOBAL STATUS BAR - PRODUCTION */
+        .production-status {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #e82127 0%, #000000 100%);
+            z-index: 10000;
+            padding: 8px 0;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            border-bottom: 1px solid rgba(232, 33, 39, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00cc66;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* HEADER - PROFESSIONAL */
+        header {
+            position: fixed;
+            top: 30px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(232, 33, 39, 0.2);
+            padding: 15px 0;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 900;
+            color: #e82127;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e82127;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #e82127;
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at 30% 50%, rgba(232, 33, 39, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 20%, rgba(0, 0, 0, 0.8) 0%, transparent 50%);
+            padding: 100px 20px 50px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #aaaaaa;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .btn-primary {
+            background: #e82127;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #e82127;
+            border: 2px solid #e82127;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* SECTIONS */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 30px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 50px;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: #e82127;
+        }
+
+        /* PRODUCT GRID */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .product-card {
+            background: #111111;
+            border: 1px solid #222222;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: #e82127;
+            box-shadow: 0 20px 40px rgba(232, 33, 39, 0.2);
+        }
+
+        .product-image {
+            height: 240px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: #e82127;
+        }
+
+        .product-content {
+            padding: 30px;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .product-description {
+            color: #aaaaaa;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e82127;
+            margin-bottom: 20px;
+        }
+
+        /* TRADING SECTION */
+        .trading-section {
+            background: #0a0a0a;
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 50px;
+            border: 1px solid #222222;
+        }
+
+        .trading-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .ticker {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .ticker-symbol {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .ticker-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e82127;
+        }
+
+        .ticker-change {
+            padding: 8px 16px;
+            background: rgba(0, 204, 102, 0.1);
+            color: #00cc66;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .trading-controls {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .order-form {
+            background: #111111;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333333;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #e82127;
+        }
+
+        .account-summary {
+            background: #111111;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #222222;
+        }
+
+        .account-row:last-child {
+            border-bottom: none;
+        }
+
+        /* MEMBERSHIP CARD */
+        .membership-card {
+            background: linear-gradient(135deg, #111111 0%, #222222 100%);
+            border: 1px solid #e82127;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .membership-header {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #e82127;
+            margin-bottom: 30px;
+        }
+
+        .membership-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e82127;
+            margin-bottom: 10px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0a0a0a;
+            padding: 80px 0 30px;
+            margin-top: 100px;
+            border-top: 1px solid rgba(232, 33, 39, 0.2);
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e82127;
+            margin-bottom: 25px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            color: #aaaaaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #e82127;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid #222222;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        /* MODAL */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #111111;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid #e82127;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .hero h1 { font-size: 3rem; }
+            .section-title { font-size: 2.5rem; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .production-status { font-size: 10px; gap: 10px; }
+            nav { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .section { padding: 60px 20px; }
+            .trading-controls { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .membership-stats { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-buttons { flex-direction: column; }
+            .btn { width: 100%; margin: 10px 0; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        /* LOADING OVERLAY */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            transition: opacity 0.5s;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #333;
+            border-top: 3px solid #e82127;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Production Status Bar -->
+    <div class="production-status">
+        <div><span class="status-dot"></span> PLATFORM OPERATIONAL</div>
+        <div>TRADING: LIVE</div>
+        <div>MEMBERS: <span id="liveMemberCount">1,247,892</span></div>
+        <div>SECURITY: MAXIMUM</div>
+        <div>API STATUS: STABLE</div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div style="color: #e82127; font-weight: 600; margin-top: 20px;">INITIALIZING TESLA NEXUS</div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                <div>TESLA NEXUS</div>
+            </div>
+            <nav>
+                <a href="#home">HOME</a>
+                <a href="#products">PRODUCTS</a>
+                <a href="#trading">TRADING</a>
+                <a href="#membership">MEMBERSHIP</a>
+                <a href="#technology">TECHNOLOGY</a>
+                <a href="#shop">SHOP</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>ACCELERATE THE FUTURE</h1>
+            <p>Tesla Nexus integrates sustainable energy, electric transportation, and advanced technology into a unified ecosystem.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="TeslaNexus.openAccount()">
+                    <span style="font-size: 20px;">⚡</span> ACCESS PLATFORM
+                </button>
+                <button class="btn btn-secondary" onclick="TeslaNexus.viewTrading()">
+                    <span style="font-size: 20px;">📈</span> LIVE TRADING
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section" id="products">
+        <h2 class="section-title">PRODUCT ECOSYSTEM</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products loaded via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Trading Section -->
+    <section class="section" id="trading">
+        <h2 class="section-title">FINANCIAL INTEGRATION</h2>
+        <div class="trading-section">
+            <div class="trading-header">
+                <div class="ticker">
+                    <div class="ticker-symbol">TSLA</div>
+                    <div class="ticker-price" id="tslaPrice">$248.72</div>
+                    <div class="ticker-change" id="tslaChange">+1.42%</div>
+                </div>
+                <div style="color: #aaaaaa;">NASDAQ • REAL-TIME</div>
+            </div>
+
+            <div class="trading-controls">
+                <div class="order-form">
+                    <h3 style="margin-bottom: 25px; color: #ffffff;">EXECUTE ORDER</h3>
+                    <div class="form-group">
+                        <label class="form-label">ORDER TYPE</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <button class="btn btn-primary" style="flex: 1;" onclick="TeslaNexus.setOrderType('buy')">BUY</button>
+                            <button class="btn btn-secondary" style="flex: 1;" onclick="TeslaNexus.setOrderType('sell')">SELL</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">QUANTITY</label>
+                        <input type="number" class="form-input" id="orderQuantity" value="100" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ORDER TYPE</label>
+                        <select class="form-input" id="orderType">
+                            <option value="market">MARKET</option>
+                            <option value="limit">LIMIT</option>
+                            <option value="stop">STOP</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="TeslaNexus.executeOrder()">
+                        EXECUTE ORDER
+                    </button>
+                </div>
+
+                <div class="account-summary">
+                    <h3 style="margin-bottom: 25px; color: #ffffff;">ACCOUNT OVERVIEW</h3>
+                    <div class="account-row">
+                        <span style="color: #aaaaaa;">BUYING POWER</span>
+                        <span style="font-weight: 600;" id="buyingPower">$124,850.25</span>
+                    </div>
+                    <div class="account-row">
+                        <span style="color: #aaaaaa;">PORTFOLIO VALUE</span>
+                        <span style="font-weight: 600;" id="portfolioValue">$452,301.84</span>
+                    </div>
+                    <div class="account-row">
+                        <span style="color: #aaaaaa;">DAILY P&L</span>
+                        <span style="font-weight: 600; color: #00cc66;" id="dailyPL">+$3,421.80</span>
+                    </div>
+                    <div class="account-row">
+                        <span style="color: #aaaaaa;">POSITIONS</span>
+                        <span style="font-weight: 600;" id="positionsCount">8</span>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: 30px;" onclick="TeslaNexus.viewPortfolio()">
+                        VIEW PORTFOLIO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section class="section" id="membership">
+        <h2 class="section-title">NEXUS MEMBERSHIP</h2>
+        <div class="membership-card">
+            <div class="membership-header">ELITE ACCESS</div>
+            <p style="color: #aaaaaa; margin-bottom: 30px; line-height: 1.6;">
+                Tesla Nexus Membership provides exclusive access to product launches, investment opportunities, 
+                and sustainable technology development.
+            </p>
+            
+            <div class="membership-stats">
+                <div class="stat">
+                    <div class="stat-number">1.2M+</div>
+                    <div style="color: #aaaaaa;">ACTIVE MEMBERS</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$2.4B</div>
+                    <div style="color: #aaaaaa;">DISTRIBUTED</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">47</div>
+                    <div style="color: #aaaaaa;">COUNTRIES</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">850K</div>
+                    <div style="color: #aaaaaa;">TONS CO₂ OFFSET</div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; padding: 20px; font-size: 18px;" onclick="TeslaNexus.joinMembership()">
+                ACTIVATE MEMBERSHIP
+            </button>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="section" id="technology">
+        <h2 class="section-title">ADVANCED TECHNOLOGY</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <span style="font-size: 60px;">🧠</span>
+                </div>
+                <div class="product-content">
+                    <div class="product-title">NEURAL PROCESSING</div>
+                    <div class="product-description">
+                        Advanced AI systems powering autonomous navigation, energy optimization, 
+                        and real-time market analysis through neural network processing.
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="TeslaNexus.viewTech('ai')">
+                        EXPLORE AI
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span style="font-size: 60px;">🔋</span>
+                </div>
+                <div class="product-content">
+                    <div class="product-title">ENERGY NETWORK</div>
+                    <div class="product-description">
+                        Distributed energy grid technology enabling real-time energy trading, 
+                        storage optimization, and sustainable power distribution.
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="TeslaNexus.viewTech('energy')">
+                        VIEW NETWORK
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span style="font-size: 60px;">🛰️</span>
+                </div>
+                <div class="product-content">
+                    <div class="product-title">ORBITAL INTEGRATION</div>
+                    <div class="product-description">
+                        Space-based connectivity and data systems providing global coverage 
+                        for autonomous navigation and communication networks.
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="TeslaNexus.viewTech('space')">
+                        ORBITAL ACCESS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>PLATFORM</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#trading">Trading</a></li>
+                    <li><a href="#membership">Membership</a></li>
+                    <li><a href="#technology">Technology</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>LEGAL</h3>
+                <ul>
+                    <li><a href="#" onclick="TeslaNexus.showLegal('terms')">Terms of Service</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showLegal('privacy')">Privacy Policy</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showLegal('compliance')">Compliance</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showLegal('disclosures')">Disclosures</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="#" onclick="TeslaNexus.contactSupport()">Contact</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showHelp('documentation')">Documentation</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showHelp('api')">API Access</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showHelp('status')">System Status</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>COMPANY</h3>
+                <ul>
+                    <li><a href="#" onclick="TeslaNexus.showCompany('about')">About Tesla Nexus</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showCompany('careers')">Careers</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showCompany('investors')">Investors</a></li>
+                    <li><a href="#" onclick="TeslaNexus.showCompany('press')">Press</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            TESLA NEXUS PLATFORM • PRODUCTION ENVIRONMENT v3.1.4 • © 2024 TESLA, INC. ALL RIGHTS RESERVED.<br>
+            <span style="font-size: 12px; opacity: 0.6;">Platform operations are conducted through licensed financial institutions.</span>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="mainModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="TeslaNexus.closeModal()">×</button>
+            <div id="modalContent">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // TESLA NEXUS - Professional Production Platform
+        const TeslaNexus = {
+            // Platform State
+            state: {
+                user: null,
+                trading: {
+                    tslaPrice: 248.72,
+                    change: 1.42,
+                    buyingPower: 124850.25,
+                    portfolioValue: 452301.84,
+                    dailyPL: 3421.80,
+                    positions: 8,
+                    orderType: 'buy'
+                },
+                products: [
+                    {
+                        id: 1,
+                        name: "MODEL S PLAID",
+                        description: "The fastest production car with 1,020 horsepower and 0-60 mph in 1.99 seconds.",
+                        price: "$89,990",
+                        icon: "🚗",
+                        category: "vehicle"
+                    },
+                    {
+                        id: 2,
+                        name: "MODEL 3 PERFORMANCE",
+                        description: "Dual Motor All-Wheel Drive with 3.1s 0-60 mph and 315 miles range.",
+                        price: "$50,990",
+                        icon: "🚘",
+                        category: "vehicle"
+                    },
+                    {
+                        id: 3,
+                        name: "MODEL X",
+                        description: "SUV with Falcon Wing doors, seating for 7, and 348 miles range.",
+                        price: "$79,990",
+                        icon: "🚙",
+                        category: "vehicle"
+                    },
+                    {
+                        id: 4,
+                        name: "MODEL Y",
+                        description: "Compact SUV with versatile interior and 330 miles range.",
+                        price: "$47,740",
+                        icon: "🚗",
+                        category: "vehicle"
+                    },
+                    {
+                        id: 5,
+                        name: "CYBERTRUCK",
+                        description: "Ultra-strong exoskeleton, armored glass, 500+ miles range.",
+                        price: "$39,900",
+                        icon: "🚛",
+                        category: "vehicle"
+                    },
+                    {
+                        id: 6,
+                        name: "SOLAR ROOF",
+                        description: "Integrated solar tiles transforming your roof into a power generator.",
+                        price: "FROM $21,000",
+                        icon: "☀️",
+                        category: "energy"
+                    },
+                    {
+                        id: 7,
+                        name: "POWERWALL",
+                        description: "Home battery storing solar energy for backup power and optimization.",
+                        price: "$8,500",
+                        icon: "🔋",
+                        category: "energy"
+                    },
+                    {
+                        id: 8,
+                        name: "MEGAPACK",
+                        description: "Utility-scale energy storage for grid stabilization and renewable integration.",
+                        price: "$1,200,000",
+                        icon: "🏭",
+                        category: "energy"
+                    }
+                ]
+            },
+
+            // Initialize Platform
+            init() {
+                console.log('Tesla Nexus Platform Initializing...');
+                
+                // Load from localStorage
+                this.loadState();
+                
+                // Render initial content
+                this.renderProducts();
+                this.updateTradingDisplay();
+                
+                // Start market simulation
+                this.startMarketSimulation();
+                
+                // Hide loading overlay
+                setTimeout(() => {
+                    document.getElementById('loadingOverlay').classList.add('hidden');
+                    console.log('Platform Ready');
+                }, 1500);
+            },
+
+            // Load/Save State
+            loadState() {
+                const saved = localStorage.getItem('teslaNexus');
+                if (saved) {
+                    this.state = JSON.parse(saved);
+                }
+            },
+
+            saveState() {
+                localStorage.setItem('teslaNexus', JSON.stringify(this.state));
+            },
+
+            // Product Rendering
+            renderProducts() {
+                const grid = document.getElementById('productsGrid');
+                if (!grid) return;
+
+                grid.innerHTML = this.state.products.map(product => `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span style="font-size: 60px;">${product.icon}</span>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">${product.name}</div>
+                            <div class="product-description">${product.description}</div>
+                            <div class="product-price">${product.price}</div>
+                            <button class="btn btn-primary" style="width: 100%;" 
+                                    onclick="TeslaNexus.viewProduct(${product.id})">
+                                ${product.category === 'vehicle' ? 'CONFIGURE' : 'EXPLORE'}
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            // Trading Functions
+            updateTradingDisplay() {
+                document.getElementById('tslaPrice').textContent = `$${this.state.trading.tslaPrice.toFixed(2)}`;
+                document.getElementById('tslaChange').textContent = `${this.state.trading.change >= 0 ? '+' : ''}${this.state.trading.change.toFixed(2)}%`;
+                document.getElementById('buyingPower').textContent = `$${this.state.trading.buyingPower.toFixed(2)}`;
+                document.getElementById('portfolioValue').textContent = `$${this.state.trading.portfolioValue.toFixed(2)}`;
+                document.getElementById('dailyPL').textContent = `${this.state.trading.dailyPL >= 0 ? '+' : ''}$${this.state.trading.dailyPL.toFixed(2)}`;
+                document.getElementById('positionsCount').textContent = this.state.trading.positions;
+                document.getElementById('dailyPL').style.color = this.state.trading.dailyPL >= 0 ? '#00cc66' : '#e82127';
+            },
+
+            startMarketSimulation() {
+                setInterval(() => {
+                    // Simulate market movement
+                    const change = (Math.random() - 0.5) * 0.8;
+                    this.state.trading.tslaPrice += change;
+                    this.state.trading.change = (this.state.trading.tslaPrice - 248.72) / 248.72 * 100;
+                    
+                    // Update portfolio values
+                    this.state.trading.portfolioValue += (Math.random() - 0.4) * 500;
+                    this.state.trading.dailyPL += (Math.random() - 0.45) * 200;
+                    
+                    this.updateTradingDisplay();
+                    this.saveState();
+                }, 3000);
+            },
+
+            setOrderType(type) {
+                this.state.trading.orderType = type;
+                this.showNotification(`Order type set to ${type.toUpperCase()}`, 'success');
+            },
+
+            executeOrder() {
+                const quantity = parseInt(document.getElementById('orderQuantity').value) || 0;
+                const type = document.getElementById('orderType').value;
+                
+                if (quantity <= 0) {
+                    this.showNotification('Please enter a valid quantity', 'error');
+                    return;
+                }
+
+                const cost = quantity * this.state.trading.tslaPrice;
+                
+                if (this.state.trading.orderType === 'buy' && this.state.trading.buyingPower < cost) {
+                    this.showNotification('Insufficient buying power', 'error');
+                    return;
+                }
+
+                // Execute trade
+                if (this.state.trading.orderType === 'buy') {
+                    this.state.trading.buyingPower -= cost;
+                    this.state.trading.portfolioValue += cost;
+                    this.state.trading.positions++;
+                } else {
+                    this.state.trading.buyingPower += cost;
+                    this.state.trading.portfolioValue -= cost;
+                    this.state.trading.positions = Math.max(0, this.state.trading.positions - 1);
+                }
+
+                this.updateTradingDisplay();
+                this.saveState();
+                
+                this.showNotification(
+                    `Order executed: ${this.state.trading.orderType.toUpperCase()} ${quantity} TSLA @ $${this.state.trading.tslaPrice.toFixed(2)}`,
+                    'success'
+                );
+            },
+
+            // Modal Functions
+            openAccount() {
+                this.showModal(`
+                    <h2 style="margin-bottom: 20px; color: #e82127;">PLATFORM ACCESS</h2>
+                    <p style="color: #aaaaaa; margin-bottom: 30px;">
+                        Tesla Nexus provides institutional-grade access to sustainable technology investments.
+                    </p>
+                    <div class="form-group">
+                        <label class="form-label">EMAIL ADDRESS</label>
+                        <input type="email" class="form-input" placeholder="institutional@domain.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">SECURITY CODE</label>
+                        <input type="text" class="form-input" placeholder="••••••••">
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="TeslaNexus.authenticate()">
+                        VERIFY IDENTITY
+                    </button>
+                `);
+            },
+
+            viewTrading() {
+                this.showModal(`
+                    <h2 style="margin-bottom: 20px; color: #e82127;">TRADING DASHBOARD</h2>
+                    <p style="color: #aaaaaa; margin-bottom: 30px;">
+                        Real-time trading interface with institutional execution.
+                    </p>
+                    <div style="background: #0a0a0a; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #aaaaaa;">Available Balance</span>
+                            <span style="font-weight: 600;">$${this.state.trading.buyingPower.toFixed(2)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #aaaaaa;">Open Positions</span>
+                            <span style="font-weight: 600;">${this.state.trading.positions}</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="TeslaNexus.executeOrder()">
+                        EXECUTE TRADE
+                    </button>
+                `);
+            },
+
+            joinMembership() {
+                this.showModal(`
+                    <h2 style="margin-bottom: 20px; color: #e82127;">MEMBERSHIP ACTIVATION</h2>
+                    <p style="color: #aaaaaa; margin-bottom: 30px;">
+                        Activate your Tesla Nexus membership for exclusive access.
+                    </p>
+                    <div class="form-group">
+                        <label class="form-label">FULL NAME</label>
+                        <input type="text" class="form-input" placeholder="Institutional Representative">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ORGANIZATION</label>
+                        <input type="text" class="form-input" placeholder="Organization Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">VERIFICATION CODE</label>
+                        <input type="text" class="form-input" placeholder="XXXX-XXXX-XXXX">
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="TeslaNexus.activateMembership()">
+                        ACTIVATE ELITE ACCESS
+                    </button>
+                `);
+            },
+
+            viewProduct(id) {
+                const product = this.state.products.find(p => p.id === id);
+                if (product) {
+                    this.showModal(`
+                        <h2 style="margin-bottom: 20px; color: #e82127;">${product.name}</h2>
+                        <div style="text-align: center; margin-bottom: 30px; font-size: 60px;">
+                            ${product.icon}
+                        </div>
+                        <p style="color: #aaaaaa; margin-bottom: 20px;">${product.description}</p>
+                        <div style="background: #0a0a0a; border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span style="color: #aaaaaa;">PRICE</span>
+                                <span style="font-weight: 600; color: #e82127;">${product.price}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #aaaaaa;">CATEGORY</span>
+                                <span style="font-weight: 600;">${product.category.toUpperCase()}</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">
+                            INITIATE ACQUISITION
+                        </button>
+                    `);
+                }
+            },
+
+            viewTech(type) {
+                const tech = {
+                    ai: { name: 'NEURAL AI', desc: 'Advanced artificial intelligence systems' },
+                    energy: { name: 'ENERGY GRID', desc: 'Distributed energy network technology' },
+                    space: { name: 'ORBITAL SYSTEMS', desc: 'Space-based connectivity and navigation' }
+                }[type];
+
+                this.showModal(`
+                    <h2 style="margin-bottom: 20px; color: #e82127;">${tech.name}</h2>
+                    <p style="color: #aaaaaa; margin-bottom: 30px;">${tech.desc}</p>
+                    <div style="background: #0a0a0a; border-radius: 12px; padding: 30px; margin-bottom: 30px;">
+                        <div style="color: #ffffff; font-weight: 600; margin-bottom: 15px;">TECHNOLOGY ACCESS</div>
+                        <div style="color: #aaaaaa; line-height: 1.6;">
+                            Institutional access to advanced Tesla technology requires 
+                            verification and compliance clearance.
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;">
+                        REQUEST ACCESS
+                    </button>
+                `);
+            },
+
+            viewPortfolio() {
+                this.showModal(`
+                    <h2 style="margin-bottom: 20px; color: #e82127;">PORTFOLIO OVERVIEW</h2>
+                    <div style="color: #aaaaaa; margin-bottom: 30px;">
+                        Real-time portfolio valuation and position tracking.
+                    </div>
+                    <div style="background: #0a0a0a; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                            <span style="color: #aaaaaa;">Total Value</span>
+                            <span style="font-weight: 600;">$${this.state.trading.portfolioValue.toFixed(2)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                            <span style="color: #aaaaaa;">Daily Change</span>
+                            <span style="font-weight: 600; color: #00cc66;">+$${this.state.trading.dailyPL.toFixed(2)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #aaaaaa;">Active Positions</span>
+                            <span style="font-weight: 600;">${this.state.trading.positions}</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%;">
+                        EXPORT STATEMENT
+                    </button>
+                `);
+            },
+
+            // Utility Functions
+            showModal(content) {
+                document.getElementById('modalContent').innerHTML = content;
+                document.getElementById('mainModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            },
+
+            closeModal() {
+                document.getElementById('mainModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            },
+
+            showNotification(message, type = 'info') {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 100px;
+                    right: 30px;
+                    background: ${type === 'error' ? '#e82127' : '#00cc66'};
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease;
+                `;
+                
+                // Add animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                    style.remove();
+                }, 3000);
+            },
+
+            // Action Functions
+            authenticate() {
+                this.showNotification('Identity verification initiated', 'success');
+                this.closeModal();
+            },
+
+            activateMembership() {
+                this.showNotification('Membership activation in progress', 'success');
+                this.closeModal();
+            },
+
+            // Legal/Support Functions
+            showLegal(type) {
+                const legal = {
+                    terms: 'Terms of Service',
+                    privacy: 'Privacy Policy',
+                    compliance: 'Compliance Framework',
+                    disclosures: 'Financial Disclosures'
+                }[type];
+                
+                this.showModal(`
+                    <h2 style="margin-bottom: 20px; color: #e82127;">${legal}</h2>
+                    <div style="color: #aaaaaa; line-height: 1.6; max-height: 300px; overflow-y: auto;">
+                        <p>Tesla Nexus operates as a technology platform providing access to sustainable 
+                        energy and transportation solutions through licensed financial institutions.</p>
+                        
+                        <p style="margin-top: 20px;">All transactions are conducted in compliance with 
+                        applicable financial regulations and are subject to institutional verification 
+                        and approval processes.</p>
+                        
+                        <p style="margin-top: 20px;">Platform access requires valid institutional 
+                        credentials and compliance with all applicable terms and conditions.</p>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: 30px;">
+                        ACKNOWLEDGE
+                    </button>
+                `);
+            },
+
+            showHelp(type) {
+                this.showModal(`
+                    <h2 style="margin-bottom: 20px; color: #e82127;">SUPPORT</h2>
+                    <div style="color: #aaaaaa; line-height: 1.6;">
+                        <p>For institutional support and platform assistance:</p>
+                        
+                        <div style="background: #0a0a0a; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                            <div style="font-weight: 600; color: #ffffff; margin-bottom: 10px;">CONTACT</div>
+                            <div style="color: #aaaaaa;">institutional@teslanexus.com</div>
+                            <div style="color: #aaaaaa; margin-top: 5px;">+1 (888) 555-0100</div>
+                        </div>
+                        
+                        <p>Available 24/7 for verified institutional partners.</p>
+                    </div>
+                `);
+            },
+
+            showCompany(type) {
+                this.showModal(`
+                    <h2 style="margin-bottom: 20px; color: #e82127;">TESLA NEXUS</h2>
+                    <div style="color: #aaaaaa; line-height: 1.6;">
+                        <p>Tesla Nexus integrates sustainable energy, electric transportation, 
+                        and advanced technology into a unified institutional platform.</p>
+                        
+                        <p style="margin-top: 20px;">The platform provides access to Tesla's 
+                        complete ecosystem through licensed financial and technology partnerships.</p>
+                        
+                        <div style="background: #0a0a0a; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                            <div style="font-weight: 600; color: #ffffff;">INSTITUTIONAL ACCESS</div>
+                            <div style="color: #aaaaaa; margin-top: 10px;">
+                                Platform availability subject to verification and compliance requirements.
+                            </div>
+                        </div>
+                    </div>
+                `);
+            },
+
+            contactSupport() {
+                this.showHelp('contact');
+            }
+        };
+
+        // Initialize platform
+        document.addEventListener('DOMContentLoaded', () => {
+            TeslaNexus.init();
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Close modal on outside click
+            document.getElementById('mainModal').addEventListener('click', (e) => {
+                if (e.target.id === 'mainModal') {
+                    TeslaNexus.closeModal();
+                }
+            });
+        });
+
+        // Global functions for button onclick handlers
+        window.TeslaNexus = TeslaNexus;
+    </script>
+</body>
+</html>
